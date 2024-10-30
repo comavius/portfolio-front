@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "definitions": {
+    "license": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "markdownBook": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "emoji": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "content": {
+          "type": "string"
+        },
+        "license": {
+          "$ref": "#/definitions/license"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "title",
+        "alias",
+        "emoji",
+        "content",
+        "license",
+        "tags",
+        "date"
+      ]
+    }
+  },
+  "properties": {
+    "markdownBooks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/markdownBook"
+      }
+    },
+    "favicon": {
+      "type": "string",
+      "format": "uri"
+    },
+    "icon": {
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "required": [
+    "markdownBooks",
+    "favicon",
+    "icon"
+  ]
+}

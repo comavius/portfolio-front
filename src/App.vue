@@ -1,30 +1,101 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from "vue-router";
+import fixedHeader from "./components/FixedHeader.vue";
+import MarkdownTitle from "@/components/MarkdownTitle.vue";
+import { ColorThemes, ColorTheme } from "@/types/colorTheme";
+import { provide, ref } from "vue";
+
+const lightPrimaryTheme = new ColorTheme("#4fc08d", "#ffffff");
+const lightSecondaryTheme = new ColorTheme("#f3f4f6", "#000");
+const lightAccentTheme = new ColorTheme("#f9a8d4", "#000");
+const lightTheme = new ColorThemes(
+  lightPrimaryTheme,
+  lightSecondaryTheme,
+  lightAccentTheme
+);
+
+const darkPrimaryTheme = new ColorTheme("#fff", "#22d20");
+const darkSecondaryTheme = new ColorTheme("#fadbe4", "#3e1020");
+const darkAccentTheme = new ColorTheme("#f9a8d4", "#000");
+const darkTheme = new ColorThemes(
+  darkPrimaryTheme,
+  darkSecondaryTheme,
+  darkAccentTheme
+);
+let isDark = false;
+const currentTheme = ref(lightTheme);
+const toggleTheme = ref(() => {
+  console.log("toggleTheme");
+  isDark = !isDark;
+  console.log(isDark);
+  currentTheme.value = isDark ? darkTheme : lightTheme;
+  console.log(currentTheme.value.getPrimary().asHtmlStyle());
+});
+
+provide("theme", currentTheme);
+provide("toggleTheme", toggleTheme);
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div class="layout">
+    <MarkdownTitle :mdbook="{
+      title: 'Home',
+      description: 'Welcome to my blog!',
+      date: '2021-10-01',
+      tags: ['home'],
+      emoji: '🏠',
+      content: 'This is the home page of my blog. Welcome!',
+      alias: 'home',
+      license: {
+        name: 'CC BY-SA 4.0',
+        url: 'https://creativecommons.org/licenses/by-sa/4.0/'
+      }
+    }" />
+    <header>
+      <fixedHeader />
+    </header>
+    <main>
+      <RouterView />
+    </main>
+    <!--
+    -->
+  </div>
 </template>
 
 <style scoped>
+/*
 header {
-  line-height: 1.5;
-  max-height: 100vh;
+  height: 60px;
 }
+
+main {
+  height: calc(100vh - 60px);
+  margin-top: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+.layout {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+*/
+
+header {
+}
+
+main {
+  overflow-y: scroll;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
 
 .logo {
   display: block;
