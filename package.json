@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "colord": "^2.9.3",
     "markdown-it": "^14.1.0",
     "markdown-it-replace-link": "^1.2.1",
     "pinia": "^2.2.4",

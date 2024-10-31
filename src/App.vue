@@ -2,21 +2,22 @@
 import { RouterLink, RouterView } from "vue-router";
 import fixedHeader from "./components/FixedHeader.vue";
 import MarkdownTitle from "@/components/MarkdownTitle.vue";
+import LinkedTag from "@/components/LinkedTag.vue";
 import { ColorThemes, ColorTheme } from "@/types/colorTheme";
 import { provide, ref } from "vue";
 
 const lightPrimaryTheme = new ColorTheme("#4fc08d", "#ffffff");
-const lightSecondaryTheme = new ColorTheme("#f3f4f6", "#000");
-const lightAccentTheme = new ColorTheme("#f9a8d4", "#000");
+const lightSecondaryTheme = new ColorTheme("#000000", "#f3f4f6");
+const lightAccentTheme = new ColorTheme("#ff0000", "#f9a8d4");
 const lightTheme = new ColorThemes(
   lightPrimaryTheme,
   lightSecondaryTheme,
   lightAccentTheme
 );
 
-const darkPrimaryTheme = new ColorTheme("#fff", "#22d20");
+const darkPrimaryTheme = new ColorTheme("#ffffff", "#22d20");
 const darkSecondaryTheme = new ColorTheme("#fadbe4", "#3e1020");
-const darkAccentTheme = new ColorTheme("#f9a8d4", "#000");
+const darkAccentTheme = new ColorTheme("#ff0000", "#000000");
 const darkTheme = new ColorThemes(
   darkPrimaryTheme,
   darkSecondaryTheme,
@@ -25,11 +26,8 @@ const darkTheme = new ColorThemes(
 let isDark = false;
 const currentTheme = ref(lightTheme);
 const toggleTheme = ref(() => {
-  console.log("toggleTheme");
   isDark = !isDark;
-  console.log(isDark);
   currentTheme.value = isDark ? darkTheme : lightTheme;
-  console.log(currentTheme.value.getPrimary().asHtmlStyle());
 });
 
 provide("theme", currentTheme);
@@ -39,11 +37,12 @@ provide("toggleTheme", toggleTheme);
 
 <template>
   <div class="layout">
+    <LinkedTag :link="`/`" name="Home" :style="currentTheme.getSecondary().asHtmlStyle()" />
     <MarkdownTitle :mdbook="{
       title: 'Home',
       description: 'Welcome to my blog!',
       date: '2021-10-01',
-      tags: ['home'],
+      tags: ['tag-1', 'tag-2'],
       emoji: '🏠',
       content: 'This is the home page of my blog. Welcome!',
       alias: 'home',

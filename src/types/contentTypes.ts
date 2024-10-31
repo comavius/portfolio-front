@@ -9,14 +9,16 @@ export interface ContentConfigSchema {
   markdownBooks: MarkdownBook[];
   favicon: string;
   icon: string;
+  biography: MarkdownBook;
   [k: string]: unknown;
 }
 export interface MarkdownBook {
   title: string;
+  regex?: string;
   alias: string;
   emoji: string;
   content: string;
-  license: License;
+  license?: License;
   tags: string[];
   date: string;
   [k: string]: unknown;

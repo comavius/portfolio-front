@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import type { MarkdownBook } from '@/types/contentTypes'
-
+import type { Article } from '@/types/article'
 import type {RouteRecordRaw} from 'vue-router'
 
 function getBlogsRoute(markdownBook: MarkdownBook): RouteRecordRaw {
@@ -14,6 +14,7 @@ function getBlogsRoute(markdownBook: MarkdownBook): RouteRecordRaw {
     }
   }
 }
+
 /*
 function getBlogRootRoutes(markdownBooks: MarkdownBook[], rootPath: string): RouteRecordRaw[] {
   return markdownBooks.map((markdownBook) => getBlogsRoute(markdownBook))
@@ -21,6 +22,10 @@ function getBlogRootRoutes(markdownBooks: MarkdownBook[], rootPath: string): Rou
 */
 
 function getRouter(markdownBooks: MarkdownBook[]) {
+  const articles: Article[] = markdownBooks.map((markdownBook) => ({
+    book: markdownBook,
+    url: `/blog/${markdownBook.alias}`
+  }))
   const routes: RouteRecordRaw[] = [
     {
       path: '/',

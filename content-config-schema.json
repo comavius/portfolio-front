@@ -13,15 +13,17 @@
           "format": "uri"
         }
       },
-      "required": [
-        "name"
-      ]
+      "required": ["name"]
     },
     "markdownBook": {
       "type": "object",
       "properties": {
         "title": {
           "type": "string"
+        },
+        "regex": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9-]+$"
         },
         "alias": {
           "type": "string"
@@ -48,15 +50,30 @@
           "format": "date-time"
         }
       },
-      "required": [
-        "title",
-        "alias",
-        "emoji",
-        "content",
-        "license",
-        "tags",
-        "date"
-      ]
+      "required": ["title", "alias", "emoji", "content", "tags", "date"]
+    },
+    "cmsConfig": {
+      "type": "object",
+      "properties": {
+        "markdownBooks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/markdownBook"
+          }
+        },
+        "favicon": {
+          "type": "string",
+          "format": "uri"
+        },
+        "icon": {
+          "type": "string",
+          "format": "uri"
+        },
+        "biography": {
+          "$ref": "#/definitions/markdownBook"
+        }
+      },
+      "required": ["markdownBooks", "favicon", "icon", "biography"]
     }
   },
   "properties": {
@@ -73,11 +90,10 @@
     "icon": {
       "type": "string",
       "format": "uri"
+    },
+    "biography": {
+      "$ref": "#/definitions/markdownBook"
     }
   },
-  "required": [
-    "markdownBooks",
-    "favicon",
-    "icon"
-  ]
+  "required": ["markdownBooks", "favicon", "icon", "biography"]
 }
